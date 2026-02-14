@@ -1,26 +1,27 @@
-
-from typing import List
 class Solution:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        ans = []
-        size = len(nums)
+    def threeSum(self, nums):
+        res = []
         nums.sort()
-        for x in range(size):
-            if(x > 0 and nums[x] == nums[x - 1]):
+        for i, a in enumerate(nums):
+            if i > 0 and a == nums[i - 1]:
                 continue
-            start = x+1
-            end = size-1
-            while start < end:
-                sum = nums[x] + nums[start] + nums[end]
-                if sum == 0:
-                    ans.append([nums[x], nums[start], nums[end]])
-                    start += 1
-                    end -= 1
-                    while start < end and nums[start] == nums[start - 1]:
-                        start += 1
-                elif sum < 0:
-                    start+= 1
+
+            l, r = i + 1, len(nums) - 1
+            while l < r:
+                threesum = a + nums[l] + nums[r]
+                if threesum < 0:
+                    l += 1
+                elif threesum > 0:
+                    r -= 1
                 else:
-                    end -= 1
-        return ans
-                    
+                    res.append([a, nums[l], nums[r]])
+                    l += 1
+                    while nums[l] == nums[l - 1] and l < r:
+                        l += 1
+        return res
+
+
+obj = Solution()
+nums = [-1, 0, 1, 2, -1, -4]
+r = obj.threeSum(nums)
+print(r)

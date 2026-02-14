@@ -1,19 +1,21 @@
 class Solution:
-    def isAnagram(self, s: str, t: str) -> bool:
-        slen = len(s)
-        tlen = len(t)
-        if slen != tlen:
+    def isAnagram(self, s, t):
+        # return sorted(s) == sorted(t)
+        if len(s) != len(t):
             return False
-        l1 = []
-        for _ in range(26):
-            l1.append(0)
-
-        for index in range(slen):
-            l1[ord(s[index]) - 97] += 1
-            l1[ord(t[index]) - 97] -= 1
-
-        for v in l1:
-            if v != 0:
+        countT = {}
+        countS = {}
+        for i in range(len(s)):
+            countS[s[i]] = 1 + countS.get(s[i], 0)
+            countT[t[i]] = 1 + countT.get(t[i], 0)
+        for c in countS:
+            if countS[c] != countS.get(c, 0):
                 return False
-
         return True
+
+
+obj = Solution()
+s = "anagram"
+t = "nagamar"
+r = obj.isAnagram(s, t)
+print(r)
